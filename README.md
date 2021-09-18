@@ -14,3 +14,5 @@ The objective is to classify the data into the various quality score categories.
 - Support Vector Machines (SVM)
 - Decision Trees
 - Random Forest
+
+See this machine learning project on Kaggle: https://www.kaggle.com/priankravichandar/wine-quality-machine-learning-classification
