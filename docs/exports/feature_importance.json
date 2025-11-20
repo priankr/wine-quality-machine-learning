@@ -1,0 +1,62 @@
+[
+  {
+    "feature":"free_sulfur_ratio",
+    "importance":2049
+  },
+  {
+    "feature":"density",
+    "importance":1932
+  },
+  {
+    "feature":"total sulfur dioxide",
+    "importance":1874
+  },
+  {
+    "feature":"residual sugar",
+    "importance":1798
+  },
+  {
+    "feature":"total_acidity",
+    "importance":1788
+  },
+  {
+    "feature":"chlorides",
+    "importance":1768
+  },
+  {
+    "feature":"pH",
+    "importance":1753
+  },
+  {
+    "feature":"volatile acidity",
+    "importance":1711
+  },
+  {
+    "feature":"sulphates",
+    "importance":1591
+  },
+  {
+    "feature":"citric acid",
+    "importance":1580
+  },
+  {
+    "feature":"alcohol_to_density",
+    "importance":1305
+  },
+  {
+    "feature":"free sulfur dioxide",
+    "importance":1298
+  },
+  {
+    "feature":"fixed acidity",
+    "importance":882
+  },
+  {
+    "feature":"alcohol",
+    "importance":628
+  },
+  {
+    "feature":"type",
+    "importance":8
+  }
+]
