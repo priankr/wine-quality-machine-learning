@@ -17,8 +17,6 @@ This project analyzes wine quality based on physicochemical properties using adv
 
 **Target:** Quality score (0-10, rated by wine experts)
 
-## What's New in This Update?
-
 ### Advanced Machine Learning Models
 - **XGBoost** - Industry-standard gradient boosting
 - **LightGBM** - Fast and efficient boosting algorithm
@@ -63,10 +61,6 @@ This project analyzes wine quality based on physicochemical properties using adv
 5. Density (negative predictor)
 
 ## Installation & Setup
-
-### Prerequisites
-- Python 3.8 or higher
-- pip package manager
 
 ### Install Dependencies
 
@@ -159,16 +153,6 @@ The interactive dashboard is automatically deployed via GitHub Pages from the `d
 3. Commit and push changes
 4. GitHub Pages will automatically update
 
-### Local Preview:
-
-```bash
-# Serve the docs folder locally
-cd docs
-python -m http.server 8000
-
-# Visit http://localhost:8000 in your browser
-```
-
 ## Using the Wine Quality Predictor
 
 The interactive dashboard includes a live predictor where you can:
@@ -214,14 +198,6 @@ The interactive dashboard includes a live predictor where you can:
 **Original Kaggle Project:**
 - [Wine Quality ML Classification](https://www.kaggle.com/priankravichandar/wine-quality-machine-learning-classification)
 
-## Contributing
-
-Contributions are welcome! Feel free to:
-- Report bugs
-- Suggest new features
-- Submit pull requests
-- Improve documentation
-
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).
@@ -231,12 +207,6 @@ This project is open source and available under the [MIT License](LICENSE).
 **Prian Ravichandar**
 - GitHub: [@priankr](https://github.com/priankr)
 - Kaggle: [priankravichandar](https://www.kaggle.com/priankravichandar)
-
-## Acknowledgments
-
-- UCI Machine Learning Repository for the dataset
-- The Portuguese "Vinho Verde" wine industry
-- Open-source ML community for amazing tools (scikit-learn, XGBoost, LightGBM, CatBoost, SHAP)
 
 ---
 
