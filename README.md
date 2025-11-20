@@ -1,4 +1,4 @@
-# Wine Quality Analysis - Modern ML Approach 🍷
+# Wine Quality Analysis - Modern ML Approach
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -6,7 +6,7 @@
 
 A comprehensive machine learning analysis of Portuguese "Vinho Verde" wine quality using modern gradient boosting models and explainable AI techniques.
 
-## 🎯 Project Overview
+## Project Overview
 
 This project analyzes wine quality based on physicochemical properties using advanced machine learning techniques. The analysis has been **completely modernized** with state-of-the-art models and interactive visualizations.
 
@@ -17,18 +17,18 @@ This project analyzes wine quality based on physicochemical properties using adv
 
 **Target:** Quality score (0-10, rated by wine experts)
 
-## 🚀 What's New in This Update?
+## What's New in This Update?
 
 ### Advanced Machine Learning Models
-- ✅ **XGBoost** - Industry-standard gradient boosting
-- ✅ **LightGBM** - Fast and efficient boosting algorithm
-- ✅ **CatBoost** - Minimal hyperparameter tuning required
-- ✅ **Comparison** with traditional models (SVM, Decision Trees, Random Forest)
+- **XGBoost** - Industry-standard gradient boosting
+- **LightGBM** - Fast and efficient boosting algorithm
+- **CatBoost** - Minimal hyperparameter tuning required
+- **Comparison** with traditional models (SVM, Decision Trees, Random Forest)
 
 ### Explainable AI (XAI)
-- 🔍 **SHAP values** - Understand which features drive predictions
-- 📊 **Feature importance** - Ranking of most influential variables
-- 🎯 **Model interpretability** - Transparent decision-making
+- **SHAP values** - Understand which features drive predictions
+- **Feature importance** - Ranking of most influential variables
+- **Model interpretability** - Transparent decision-making
 
 ### Multiple Problem Formulations
 - **Multi-class Classification** - Predict exact quality scores (4-8)
@@ -36,17 +36,17 @@ This project analyzes wine quality based on physicochemical properties using adv
 - **Regression** - Continuous quality score prediction
 
 ### Unsupervised Learning
-- 🔬 **K-Means Clustering** - Discover natural wine groupings
-- 📉 **Dimensionality Reduction** - PCA and UMAP visualizations
-- 🎨 **Interactive 2D/3D plots** - Explore wine similarity
+- **K-Means Clustering** - Discover natural wine groupings
+- **Dimensionality Reduction** - PCA and UMAP visualizations
+- **Interactive 2D/3D plots** - Explore wine similarity
 
 ### Interactive GitHub Pages Dashboard
-- 📱 **Responsive design** - Works on desktop and mobile
-- 📊 **Interactive charts** - Plotly.js visualizations
-- 🎮 **Live predictor** - Test wine quality predictions
-- 🎨 **Modern UI** - Clean, professional interface
+- **Responsive design** - Works on desktop and mobile
+- **Interactive charts** - Plotly.js visualizations
+- **Live predictor** - Test wine quality predictions
+- **Modern UI** - Clean, professional interface
 
-## 📊 Key Results
+## Key Results
 
 | Model | Test Accuracy | Cross-Val Mean |
 |-------|---------------|----------------|
@@ -62,7 +62,7 @@ This project analyzes wine quality based on physicochemical properties using adv
 4. Sulphates (positive predictor)
 5. Density (negative predictor)
 
-## 🛠️ Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 - Python 3.8 or higher
@@ -83,7 +83,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## 📓 Running the Analysis
+## Running the Analysis
 
 ### Option 1: Jupyter Notebook (Recommended)
 
@@ -99,7 +99,7 @@ jupyter notebook
 
 Visit the **[Live Dashboard](https://priankr.github.io/wine-quality-machine-learning/)** to explore interactive visualizations and predictions without running any code!
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 wine-quality-machine-learning/
@@ -119,7 +119,7 @@ wine-quality-machine-learning/
 └── README.md                        # This file
 ```
 
-## 🔬 Analysis Methodology
+## Analysis Methodology
 
 ### 1. Data Preprocessing
 - Outlier removal using Z-score method (|z| > 3)
@@ -148,7 +148,7 @@ wine-quality-machine-learning/
 - Cluster characterization
 - 2D visualization (PCA, UMAP)
 
-## 🌐 GitHub Pages Deployment
+## GitHub Pages Deployment
 
 The interactive dashboard is automatically deployed via GitHub Pages from the `docs/` folder.
 
@@ -169,7 +169,7 @@ python -m http.server 8000
 # Visit http://localhost:8000 in your browser
 ```
 
-## 📈 Using the Wine Quality Predictor
+## Using the Wine Quality Predictor
 
 The interactive dashboard includes a live predictor where you can:
 
@@ -179,7 +179,7 @@ The interactive dashboard includes a live predictor where you can:
 
 **Note:** The browser-based predictor uses a simplified heuristic model. For accurate predictions, use the trained LightGBM model from the notebook.
 
-## 🧠 Key Insights
+## Key Insights
 
 ### Model Performance
 - Gradient boosting models significantly outperform traditional Random Forest (~4% improvement)
@@ -198,7 +198,7 @@ The interactive dashboard includes a live predictor where you can:
 - Consumer preference prediction
 - Anomaly detection for exceptional wines
 
-## 📚 References
+## References
 
 **Original Dataset:**
 - P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis.
@@ -214,7 +214,7 @@ The interactive dashboard includes a live predictor where you can:
 **Original Kaggle Project:**
 - [Wine Quality ML Classification](https://www.kaggle.com/priankravichandar/wine-quality-machine-learning-classification)
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Feel free to:
 - Report bugs
@@ -222,17 +222,17 @@ Contributions are welcome! Feel free to:
 - Submit pull requests
 - Improve documentation
 
-## 📄 License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## 👤 Author
+## Author
 
 **Prian Ravichandar**
 - GitHub: [@priankr](https://github.com/priankr)
 - Kaggle: [priankravichandar](https://www.kaggle.com/priankravichandar)
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - UCI Machine Learning Repository for the dataset
 - The Portuguese "Vinho Verde" wine industry
@@ -240,6 +240,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-**⭐ If you find this project useful, please consider giving it a star!**
+**If you find this project useful, please consider giving it a star!**
 
-**🔗 [View Live Dashboard](https://priankr.github.io/wine-quality-machine-learning/)**
+**[View Live Dashboard](https://priankr.github.io/wine-quality-machine-learning/)**
