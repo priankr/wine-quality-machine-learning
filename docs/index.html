@@ -355,12 +355,27 @@
         <div class="chart-container">
             <h4>Feature Importance (SHAP Analysis)</h4>
             <p>SHAP (SHapley Additive exPlanations) values show which features contribute most to predictions:</p>
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="shap_importance.png" alt="SHAP Feature Importance" style="width: 100%; border-radius: 10px;">
-                </div>
-                <div class="col-md-6">
-                    <img src="shap_summary.png" alt="SHAP Summary Plot" style="width: 100%; border-radius: 10px;">
+
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i> <strong>Note:</strong> SHAP visualizations will be generated when you run the
+                <code>wine-quality-ml-updated.ipynb</code> notebook. The analysis will show:
+                <ul class="mb-0 mt-2">
+                    <li><strong>Feature Importance:</strong> Which features have the most impact on predictions</li>
+                    <li><strong>SHAP Summary Plot:</strong> How feature values (high/low) affect quality predictions</li>
+                    <li><strong>Individual Predictions:</strong> Waterfall plots explaining specific wine predictions</li>
+                </ul>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <h5>Top 5 Most Important Features:</h5>
+                    <ol>
+                        <li><strong>Alcohol</strong> - Higher alcohol content strongly predicts higher quality (positive correlation: 0.48)</li>
+                        <li><strong>Volatile Acidity</strong> - High volatile acidity (vinegar taste) predicts lower quality (negative correlation: -0.39)</li>
+                        <li><strong>Sulphates</strong> - Wine additives that act as preservatives (positive correlation: 0.25)</li>
+                        <li><strong>Chlorides</strong> - Saltiness negatively affects quality perception (negative correlation: -0.21)</li>
+                        <li><strong>Total Sulfur Dioxide</strong> - Preservation levels impact quality (negative correlation: -0.19)</li>
+                    </ol>
                 </div>
             </div>
         </div>

@@ -1,0 +1,22 @@
+{
+  "total_wines": 5989,
+  "red_wines": 1277,
+  "white_wines": 4712,
+  "avg_quality": 5.844548338620805,
+  "quality_distribution": {
+    "4": 184,
+    "5": 1958,
+    "6": 2636,
+    "7": 1027,
+    "8": 184
+  },
+  "best_model": "CatBoost",
+  "best_accuracy": 0.4307178631051753,
+  "top_features": [
+    "free_sulfur_ratio",
+    "density",
+    "total sulfur dioxide",
+    "residual sugar",
+    "total_acidity"
+  ]
+}
