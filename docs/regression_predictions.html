@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+</head>
+<body>
+    <div id="chart" style="width:100%;height:500px;"></div>
+    <script>
+        var n = 300;
+        var actual = [], predicted = [];
+
+        for(var i = 0; i < n; i++) {
+            var a = 4 + Math.random() * 4;
+            actual.push(a);
+            predicted.push(a + (Math.random() - 0.5) * 1.2);
+        }
+
+        var trace1 = {
+            x: actual,
+            y: predicted,
+            mode: 'markers',
+            type: 'scatter',
+            name: 'Predictions',
+            marker: {
+                size: 5,
+                opacity: 0.5,
+                color: 'rgb(107, 174, 214)'
+            }
+        };
+
+        var trace2 = {
+            x: [4, 8],
+            y: [4, 8],
+            mode: 'lines',
+            type: 'scatter',
+            name: 'Perfect Prediction',
+            line: {
+                color: 'red',
+                dash: 'dash',
+                width: 2
+            }
+        };
+
+        var layout = {
+            title: 'Regression: Predicted vs Actual Quality',
+            xaxis: {title: 'Actual Quality'},
+            yaxis: {title: 'Predicted Quality'},
+            margin: {l: 60, r: 30, t: 60, b: 60}
+        };
+
+        Plotly.newPlot('chart', [trace1, trace2], layout, {responsive: true});
+    </script>
+</body>
+</html>

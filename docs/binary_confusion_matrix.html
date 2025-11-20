@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+</head>
+<body>
+    <div id="chart" style="width:100%;height:400px;"></div>
+    <script>
+        var data = [{
+            z: [[1245, 156], [213, 183]],
+            x: ['Not Good', 'Good'],
+            y: ['Not Good', 'Good'],
+            type: 'heatmap',
+            colorscale: 'Blues',
+            text: [['1245', '156'], ['213', '183']],
+            texttemplate: '%{text}',
+            textfont: {size: 20},
+            showscale: true
+        }];
+
+        var layout = {
+            title: 'Binary Classification Confusion Matrix',
+            xaxis: {title: 'Predicted'},
+            yaxis: {title: 'Actual'},
+            margin: {l: 100, r: 50, t: 60, b: 80}
+        };
+
+        Plotly.newPlot('chart', data, layout, {responsive: true});
+    </script>
+</body>
+</html>

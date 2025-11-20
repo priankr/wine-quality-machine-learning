@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+</head>
+<body>
+    <div id="chart" style="width:100%;height:600px;"></div>
+    <script>
+        // Generate sample UMAP data with clusters
+        var n = 500;
+        var umap1 = [], umap2 = [], cluster = [];
+        var colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728'];
+
+        for(var i = 0; i < n; i++) {
+            var c = Math.floor(Math.random() * 4);
+            cluster.push(c);
+            var centerX = (c % 2) * 6 - 3;
+            var centerY = Math.floor(c / 2) * 6 - 3;
+            umap1.push(centerX + (Math.random() - 0.5) * 2);
+            umap2.push(centerY + (Math.random() - 0.5) * 2);
+        }
+
+        var trace = {
+            x: umap1,
+            y: umap2,
+            mode: 'markers',
+            type: 'scatter',
+            marker: {
+                size: 4,
+                color: cluster,
+                colorscale: [[0, colors[0]], [0.33, colors[1]], [0.67, colors[2]], [1, colors[3]]],
+                showscale: false,
+                opacity: 0.6
+            },
+            text: cluster.map(c => 'Cluster ' + c),
+            hoverinfo: 'text'
+        };
+
+        var layout = {
+            title: 'Wine Clusters (UMAP)',
+            xaxis: {title: 'UMAP1'},
+            yaxis: {title: 'UMAP2'},
+            hovermode: 'closest',
+            margin: {l: 60, r: 30, t: 60, b: 60}
+        };
+
+        Plotly.newPlot('chart', [trace], layout, {responsive: true});
+    </script>
+</body>
+</html>

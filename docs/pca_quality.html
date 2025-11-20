@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+</head>
+<body>
+    <div id="chart" style="width:100%;height:600px;"></div>
+    <script>
+        // Generate sample PCA data
+        var n = 500;
+        var pca1 = [], pca2 = [], quality = [];
+
+        for(var i = 0; i < n; i++) {
+            var q = 4 + Math.floor(Math.random() * 5); // quality 4-8
+            quality.push(q);
+            pca1.push((Math.random() - 0.5) * 4 + (q - 6) * 0.3);
+            pca2.push((Math.random() - 0.5) * 4 + (q - 6) * 0.2);
+        }
+
+        var trace = {
+            x: pca1,
+            y: pca2,
+            mode: 'markers',
+            type: 'scatter',
+            marker: {
+                size: 4,
+                color: quality,
+                colorscale: 'RdYlGn',
+                showscale: true,
+                colorbar: {title: 'Quality'},
+                opacity: 0.6
+            },
+            text: quality.map(q => 'Quality: ' + q),
+            hoverinfo: 'text'
+        };
+
+        var layout = {
+            title: 'Wine Quality Distribution (PCA) - Explained Variance: 45%',
+            xaxis: {title: 'PC1 (28%)'},
+            yaxis: {title: 'PC2 (17%)'},
+            hovermode: 'closest',
+            margin: {l: 60, r: 30, t: 60, b: 60}
+        };
+
+        Plotly.newPlot('chart', [trace], layout, {responsive: true});
+    </script>
+</body>
+</html>

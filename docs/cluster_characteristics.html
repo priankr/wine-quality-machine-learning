@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+</head>
+<body>
+    <div id="chart" style="width:100%;height:500px;"></div>
+    <script>
+        var clusters = ['Cluster 0', 'Cluster 1', 'Cluster 2', 'Cluster 3'];
+
+        var trace1 = {
+            x: clusters,
+            y: [10.2, 11.5, 9.8, 10.9],
+            name: 'Alcohol',
+            type: 'bar'
+        };
+
+        var trace2 = {
+            x: clusters,
+            y: [0.35, 0.25, 0.48, 0.30],
+            name: 'Volatile Acidity',
+            type: 'bar'
+        };
+
+        var trace3 = {
+            x: clusters,
+            y: [3.2, 8.5, 2.1, 4.5],
+            name: 'Residual Sugar',
+            type: 'bar'
+        };
+
+        var trace4 = {
+            x: clusters,
+            y: [5.8, 6.2, 5.5, 6.0],
+            name: 'Quality',
+            type: 'bar'
+        };
+
+        var data = [trace1, trace2, trace3, trace4];
+
+        var layout = {
+            title: 'Cluster Characteristics',
+            xaxis: {title: 'Cluster'},
+            yaxis: {title: 'Average Value'},
+            barmode: 'group',
+            margin: {l: 60, r: 30, t: 60, b: 60}
+        };
+
+        Plotly.newPlot('chart', data, layout, {responsive: true});
+    </script>
+</body>
+</html>

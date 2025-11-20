@@ -1,0 +1,26 @@
+[
+  {
+    "model": "LightGBM",
+    "accuracy": 0.7156,
+    "cv_score_mean": 0.7089,
+    "cv_score_std": 0.0112
+  },
+  {
+    "model": "CatBoost",
+    "accuracy": 0.7103,
+    "cv_score_mean": 0.7045,
+    "cv_score_std": 0.0098
+  },
+  {
+    "model": "XGBoost",
+    "accuracy": 0.7034,
+    "cv_score_mean": 0.6978,
+    "cv_score_std": 0.0105
+  },
+  {
+    "model": "Random Forest (Baseline)",
+    "accuracy": 0.6801,
+    "cv_score_mean": 0.6756,
+    "cv_score_std": 0.0089
+  }
+]

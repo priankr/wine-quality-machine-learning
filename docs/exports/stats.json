@@ -1,0 +1,22 @@
+{
+  "total_wines": 5989,
+  "red_wines": 1493,
+  "white_wines": 4496,
+  "avg_quality": 5.82,
+  "quality_distribution": {
+    "4": 163,
+    "5": 1457,
+    "6": 2198,
+    "7": 1079,
+    "8": 92
+  },
+  "best_model": "LightGBM",
+  "best_accuracy": 0.7156,
+  "top_features": [
+    "alcohol",
+    "volatile acidity",
+    "sulphates",
+    "chlorides",
+    "total sulfur dioxide"
+  ]
+}
