@@ -1,0 +1,4 @@
+# GitHub Pages Configuration
+theme: jekyll-theme-minimal
+title: Wine Quality Analysis
+description: Modern Machine Learning analysis of Portuguese Vinho Verde wine using advanced gradient boosting models and explainable AI

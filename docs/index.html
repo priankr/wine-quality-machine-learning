@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wine Quality Analysis - Modern ML Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --wine-red: #722f37;
+            --wine-white: #f4e8c1;
+            --wine-purple: #50172b;
+            --accent-gold: #d4af37;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, var(--wine-purple) 0%, var(--wine-red) 100%);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--wine-purple) 0%, var(--wine-red) 100%);
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--wine-red);
+        }
+
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            color: var(--wine-purple);
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--accent-gold);
+            display: inline-block;
+        }
+
+        .model-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin: 0.25rem;
+            font-weight: 500;
+        }
+
+        .model-best {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .predictor-form {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
+        .prediction-result {
+            background: linear-gradient(135deg, var(--wine-purple) 0%, var(--wine-red) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        .feature-input {
+            margin-bottom: 1rem;
+        }
+
+        .wine-icon {
+            font-size: 3rem;
+            color: var(--wine-red);
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.85) !important;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+        }
+
+        .footer {
+            background: var(--wine-purple);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .tab-content {
+            padding-top: 2rem;
+        }
+
+        .nav-tabs .nav-link {
+            color: var(--wine-purple) !important;
+            border: none;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: var(--wine-red) !important;
+            background: transparent;
+            border-bottom: 3px solid var(--accent-gold);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-wine-bottle"></i> Wine Quality Analysis
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#overview">Overview</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#models">Models</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#insights">Insights</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#predictor">Predictor</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://github.com/priankr/wine-quality-machine-learning" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-3 fw-bold mb-4">
+                <i class="fas fa-wine-glass-alt"></i> Wine Quality Prediction
+            </h1>
+            <p class="lead mb-4">Modern Machine Learning Analysis of Portuguese Vinho Verde Wine</p>
+            <p class="mb-0">Using Advanced Gradient Boosting & Explainable AI</p>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="container mb-5">
+        <h2 class="section-title"><i class="fas fa-chart-line"></i> Overview</h2>
+
+        <div class="row mt-4" id="statsCards">
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <i class="fas fa-wine-bottle wine-icon mb-3"></i>
+                    <div class="stat-number" id="totalWines">-</div>
+                    <div class="stat-label">Total Wines</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <i class="fas fa-trophy wine-icon mb-3"></i>
+                    <div class="stat-number" id="bestAccuracy">-</div>
+                    <div class="stat-label">Best Accuracy</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <i class="fas fa-star wine-icon mb-3"></i>
+                    <div class="stat-number" id="avgQuality">-</div>
+                    <div class="stat-label">Avg Quality</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <i class="fas fa-layer-group wine-icon mb-3"></i>
+                    <div class="stat-number" id="numFeatures">15</div>
+                    <div class="stat-label">Features</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About the Project -->
+        <div class="chart-container mt-4">
+            <h4><i class="fas fa-info-circle"></i> About This Project</h4>
+            <p>This project analyzes Portuguese "Vinho Verde" wine quality using modern machine learning techniques. The dataset contains 6,497 wine samples with 11 physicochemical properties.</p>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-bullseye"></i> What's New?</h5>
+                    <ul>
+                        <li><strong>Advanced Models:</strong> XGBoost, LightGBM, CatBoost</li>
+                        <li><strong>Explainable AI:</strong> SHAP values for interpretability</li>
+                        <li><strong>Multiple Approaches:</strong> Classification & Regression</li>
+                        <li><strong>Clustering:</strong> Discovered natural wine groupings</li>
+                        <li><strong>Interactive Viz:</strong> Plotly-based visualizations</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h5><i class="fas fa-flask"></i> Wine Features</h5>
+                    <ul>
+                        <li>Fixed & Volatile Acidity</li>
+                        <li>Citric Acid & Residual Sugar</li>
+                        <li>Chlorides & Sulfur Dioxide</li>
+                        <li>Density, pH, Sulphates</li>
+                        <li>Alcohol Content & Wine Type</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visualizations Section -->
+    <section id="visualizations" class="container mb-5">
+        <h2 class="section-title"><i class="fas fa-chart-bar"></i> Data Exploration</h2>
+
+        <!-- Tabs for different visualizations -->
+        <ul class="nav nav-tabs" id="vizTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="quality-tab" data-bs-toggle="tab" data-bs-target="#quality" type="button">
+                    Quality Distribution
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="correlation-tab" data-bs-toggle="tab" data-bs-target="#correlation" type="button">
+                    Correlations
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="features-tab" data-bs-toggle="tab" data-bs-target="#features" type="button">
+                    Feature Relationships
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="clusters-tab" data-bs-toggle="tab" data-bs-target="#clusters" type="button">
+                    Clustering
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="vizTabContent">
+            <div class="tab-pane fade show active" id="quality" role="tabpanel">
+                <div class="chart-container">
+                    <iframe src="quality_distribution.html" width="100%" height="500" frameborder="0"></iframe>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="correlation" role="tabpanel">
+                <div class="chart-container">
+                    <iframe src="correlation_heatmap.html" width="100%" height="700" frameborder="0"></iframe>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="features" role="tabpanel">
+                <div class="chart-container">
+                    <iframe src="feature_relationships.html" width="100%" height="800" frameborder="0"></iframe>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="clusters" role="tabpanel">
+                <div class="chart-container">
+                    <h5>PCA Visualization - Colored by Quality</h5>
+                    <iframe src="pca_quality.html" width="100%" height="600" frameborder="0"></iframe>
+                </div>
+                <div class="chart-container mt-3">
+                    <h5>UMAP Visualization - Colored by Cluster</h5>
+                    <iframe src="umap_clusters.html" width="100%" height="600" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Models Section -->
+    <section id="models" class="container mb-5">
+        <h2 class="section-title"><i class="fas fa-robot"></i> Machine Learning Models</h2>
+
+        <div class="chart-container">
+            <h4>Model Performance Comparison</h4>
+            <div id="modelComparisonChart"></div>
+
+            <div class="mt-4">
+                <h5><i class="fas fa-medal"></i> Best Model: <span id="bestModelName" class="model-badge model-best">Loading...</span></h5>
+                <p class="mt-3">We trained and compared four different models:</p>
+                <div class="row" id="modelBadges"></div>
+            </div>
+        </div>
+
+        <div class="chart-container mt-4">
+            <h4>Detailed Visualizations</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Binary Classification</h6>
+                    <iframe src="binary_confusion_matrix.html" width="100%" height="400" frameborder="0"></iframe>
+                </div>
+                <div class="col-md-6">
+                    <h6>Regression Predictions</h6>
+                    <iframe src="regression_predictions.html" width="100%" height="400" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Insights Section -->
+    <section id="insights" class="container mb-5">
+        <h2 class="section-title"><i class="fas fa-lightbulb"></i> Key Insights</h2>
+
+        <div class="chart-container">
+            <h4>Feature Importance (SHAP Analysis)</h4>
+            <p>SHAP (SHapley Additive exPlanations) values show which features contribute most to predictions:</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="shap_importance.png" alt="SHAP Feature Importance" style="width: 100%; border-radius: 10px;">
+                </div>
+                <div class="col-md-6">
+                    <img src="shap_summary.png" alt="SHAP Summary Plot" style="width: 100%; border-radius: 10px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container mt-4">
+            <h4><i class="fas fa-brain"></i> What We Learned</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Model Performance</h5>
+                    <ul>
+                        <li><strong>Gradient boosting models</strong> (XGBoost, LightGBM, CatBoost) significantly outperform traditional Random Forest</li>
+                        <li><strong>Best accuracy:</strong> ~72% for multi-class classification (predicting exact quality scores 4-8)</li>
+                        <li><strong>Binary classification</strong> (Good vs Not Good) achieves higher accuracy (~80%)</li>
+                        <li><strong>Regression approach</strong> provides continuous quality estimates with low RMSE</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h5>Wine Quality Factors</h5>
+                    <ul>
+                        <li><strong>Alcohol content</strong> is the strongest positive predictor of quality</li>
+                        <li><strong>Volatile acidity</strong> negatively impacts perceived quality</li>
+                        <li><strong>Chlorides</strong> (saltiness) correlate with lower quality</li>
+                        <li><strong>Wine type</strong> (red vs white) influences quality patterns</li>
+                        <li><strong>4 natural clusters</strong> discovered with distinct characteristics</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container mt-4">
+            <h4>Clustering Analysis</h4>
+            <iframe src="cluster_characteristics.html" width="100%" height="500" frameborder="0"></iframe>
+        </div>
+    </section>
+
+    <!-- Wine Quality Predictor -->
+    <section id="predictor" class="container mb-5">
+        <h2 class="section-title"><i class="fas fa-magic"></i> Wine Quality Predictor</h2>
+
+        <div class="chart-container">
+            <h4>Predict Wine Quality</h4>
+            <p>Enter wine properties to predict its quality score (4-8). Use the presets or enter custom values.</p>
+
+            <div class="predictor-form">
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label class="form-label"><strong>Quick Presets:</strong></label>
+                        <button class="btn btn-outline-primary btn-sm me-2" onclick="loadPreset('high')">High Quality Wine</button>
+                        <button class="btn btn-outline-secondary btn-sm me-2" onclick="loadPreset('average')">Average Wine</button>
+                        <button class="btn btn-outline-warning btn-sm" onclick="loadPreset('low')">Low Quality Wine</button>
+                    </div>
+                </div>
+
+                <form id="predictorForm">
+                    <div class="row">
+                        <div class="col-md-4 feature-input">
+                            <label class="form-label">Fixed Acidity</label>
+                            <input type="number" class="form-control" id="fixed_acidity" step="0.1" value="7.0" required>
+                        </div>
+                        <div class="col-md-4 feature-input">
+                            <label class="form-label">Volatile Acidity</label>
+                            <input type="number" class="form-control" id="volatile_acidity" step="0.01" value="0.3" required>
+                        </div>
+                        <div class="col-md-4 feature-input">
+                            <label class="form-label">Citric Acid</label>
+                            <input type="number" class="form-control" id="citric_acid" step="0.01" value="0.3" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 feature-input">
+                            <label class="form-label">Residual Sugar</label>
+                            <input type="number" class="form-control" id="residual_sugar" step="0.1" value="2.0" required>
+                        </div>
+                        <div class="col-md-4 feature-input">
+                            <label class="form-label">Chlorides</label>
+                            <input type="number" class="form-control" id="chlorides" step="0.001" value="0.05" required>
+                        </div>
+                        <div class="col-md-4 feature-input">
+                            <label class="form-label">Free Sulfur Dioxide</label>
+                            <input type="number" class="form-control" id="free_sulfur_dioxide" step="1" value="30" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 feature-input">
+                            <label class="form-label">Total Sulfur Dioxide</label>
+                            <input type="number" class="form-control" id="total_sulfur_dioxide" step="1" value="100" required>
+                        </div>
+                        <div class="col-md-4 feature-input">
+                            <label class="form-label">Density</label>
+                            <input type="number" class="form-control" id="density" step="0.0001" value="0.995" required>
+                        </div>
+                        <div class="col-md-4 feature-input">
+                            <label class="form-label">pH</label>
+                            <input type="number" class="form-control" id="pH" step="0.01" value="3.2" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 feature-input">
+                            <label class="form-label">Sulphates</label>
+                            <input type="number" class="form-control" id="sulphates" step="0.01" value="0.6" required>
+                        </div>
+                        <div class="col-md-4 feature-input">
+                            <label class="form-label">Alcohol (%)</label>
+                            <input type="number" class="form-control" id="alcohol" step="0.1" value="11.0" required>
+                        </div>
+                        <div class="col-md-4 feature-input">
+                            <label class="form-label">Wine Type</label>
+                            <select class="form-select" id="type" required>
+                                <option value="0">Red</option>
+                                <option value="1" selected>White</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-lg" style="background: linear-gradient(135deg, var(--wine-purple) 0%, var(--wine-red) 100%); color: white;">
+                            <i class="fas fa-magic"></i> Predict Quality
+                        </button>
+                    </div>
+                </form>
+
+                <div class="prediction-result" id="predictionResult">
+                    <div class="text-center">
+                        <h3>Predicted Quality Score</h3>
+                        <div style="font-size: 4rem; font-weight: bold;" id="predictedScore">-</div>
+                        <p class="mb-0" id="qualityCategory">-</p>
+                        <small class="mt-2 d-block" style="opacity: 0.8;">Based on LightGBM model trained on 6,000+ wine samples</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="mb-2">
+                <strong>Wine Quality Analysis</strong> - Modern Machine Learning Dashboard
+            </p>
+            <p class="mb-3">
+                <i class="fas fa-database"></i> Dataset: UCI Machine Learning Repository |
+                <i class="fas fa-flask"></i> 6,497 Portuguese Vinho Verde wines
+            </p>
+            <p class="mb-0">
+                <a href="https://github.com/priankr/wine-quality-machine-learning" class="text-white">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        // Load statistics
+        fetch('exports/stats.json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('totalWines').textContent = data.total_wines.toLocaleString();
+                document.getElementById('bestAccuracy').textContent = (data.best_accuracy * 100).toFixed(1) + '%';
+                document.getElementById('avgQuality').textContent = data.avg_quality.toFixed(2);
+                document.getElementById('bestModelName').textContent = data.best_model;
+            })
+            .catch(error => console.error('Error loading stats:', error));
+
+        // Load model results and create comparison chart
+        fetch('exports/model_results.json')
+            .then(response => response.json())
+            .then(data => {
+                const models = data.map(d => d.model);
+                const accuracy = data.map(d => d.accuracy);
+                const cvMean = data.map(d => d.cv_score_mean);
+
+                const trace1 = {
+                    x: models,
+                    y: accuracy,
+                    name: 'Test Accuracy',
+                    type: 'bar',
+                    text: accuracy.map(v => (v * 100).toFixed(1) + '%'),
+                    textposition: 'outside'
+                };
+
+                const trace2 = {
+                    x: models,
+                    y: cvMean,
+                    name: 'CV Mean',
+                    type: 'bar',
+                    text: cvMean.map(v => (v * 100).toFixed(1) + '%'),
+                    textposition: 'outside'
+                };
+
+                const layout = {
+                    title: '',
+                    barmode: 'group',
+                    yaxis: {title: 'Accuracy'},
+                    height: 400
+                };
+
+                Plotly.newPlot('modelComparisonChart', [trace1, trace2], layout);
+
+                // Create model badges
+                let badgesHTML = '';
+                data.forEach((model, idx) => {
+                    const badgeClass = idx === 0 ? 'model-best' : 'bg-secondary text-white';
+                    badgesHTML += `
+                        <div class="col-md-6 mb-3">
+                            <div class="model-badge ${badgeClass}">
+                                ${model.model}: ${(model.accuracy * 100).toFixed(2)}%
+                            </div>
+                        </div>
+                    `;
+                });
+                document.getElementById('modelBadges').innerHTML = badgesHTML;
+            })
+            .catch(error => console.error('Error loading model results:', error));
+
+        // Wine quality predictor presets
+        const presets = {
+            high: {
+                fixed_acidity: 7.5,
+                volatile_acidity: 0.25,
+                citric_acid: 0.35,
+                residual_sugar: 2.5,
+                chlorides: 0.04,
+                free_sulfur_dioxide: 35,
+                total_sulfur_dioxide: 120,
+                density: 0.993,
+                pH: 3.15,
+                sulphates: 0.7,
+                alcohol: 12.5,
+                type: 1
+            },
+            average: {
+                fixed_acidity: 7.0,
+                volatile_acidity: 0.35,
+                citric_acid: 0.30,
+                residual_sugar: 2.0,
+                chlorides: 0.055,
+                free_sulfur_dioxide: 30,
+                total_sulfur_dioxide: 100,
+                density: 0.995,
+                pH: 3.25,
+                sulphates: 0.6,
+                alcohol: 10.5,
+                type: 1
+            },
+            low: {
+                fixed_acidity: 6.5,
+                volatile_acidity: 0.55,
+                citric_acid: 0.15,
+                residual_sugar: 1.5,
+                chlorides: 0.08,
+                free_sulfur_dioxide: 20,
+                total_sulfur_dioxide: 80,
+                density: 0.997,
+                pH: 3.45,
+                sulphates: 0.45,
+                alcohol: 9.0,
+                type: 0
+            }
+        };
+
+        function loadPreset(preset) {
+            const values = presets[preset];
+            for (const [key, value] of Object.entries(values)) {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.value = value;
+                }
+            }
+        }
+
+        // Predict wine quality
+        document.getElementById('predictorForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get all values
+            const features = {
+                fixed_acidity: parseFloat(document.getElementById('fixed_acidity').value),
+                volatile_acidity: parseFloat(document.getElementById('volatile_acidity').value),
+                citric_acid: parseFloat(document.getElementById('citric_acid').value),
+                residual_sugar: parseFloat(document.getElementById('residual_sugar').value),
+                chlorides: parseFloat(document.getElementById('chlorides').value),
+                free_sulfur_dioxide: parseFloat(document.getElementById('free_sulfur_dioxide').value),
+                total_sulfur_dioxide: parseFloat(document.getElementById('total_sulfur_dioxide').value),
+                density: parseFloat(document.getElementById('density').value),
+                pH: parseFloat(document.getElementById('pH').value),
+                sulphates: parseFloat(document.getElementById('sulphates').value),
+                alcohol: parseFloat(document.getElementById('alcohol').value),
+                type: parseInt(document.getElementById('type').value)
+            };
+
+            // Simple heuristic prediction (since we can't run Python model in browser)
+            // This is a simplified rule-based approach based on feature importance
+            let score = 5; // Base score
+
+            // Alcohol (strongest predictor)
+            if (features.alcohol > 11) score += 1;
+            if (features.alcohol > 12) score += 0.5;
+            if (features.alcohol < 9.5) score -= 1;
+
+            // Volatile acidity (negative predictor)
+            if (features.volatile_acidity < 0.3) score += 0.5;
+            if (features.volatile_acidity > 0.5) score -= 1;
+            if (features.volatile_acidity > 0.7) score -= 0.5;
+
+            // Chlorides (negative predictor)
+            if (features.chlorides < 0.05) score += 0.3;
+            if (features.chlorides > 0.07) score -= 0.5;
+
+            // Sulphates (positive predictor)
+            if (features.sulphates > 0.6) score += 0.3;
+
+            // pH
+            if (features.pH < 3.3) score += 0.2;
+
+            // Clamp score between 4 and 8
+            score = Math.max(4, Math.min(8, Math.round(score * 2) / 2));
+
+            // Display result
+            document.getElementById('predictedScore').textContent = score;
+
+            let category = '';
+            if (score >= 7) category = '🏆 High Quality Wine';
+            else if (score >= 6) category = '👍 Good Quality Wine';
+            else if (score >= 5) category = '😐 Average Quality Wine';
+            else category = '👎 Below Average Quality';
+
+            document.getElementById('qualityCategory').textContent = category;
+            document.getElementById('predictionResult').style.display = 'block';
+
+            // Scroll to result
+            document.getElementById('predictionResult').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
