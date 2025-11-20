@@ -1,4 +1,4 @@
-# Quick Start Guide 🚀
+# Quick Start Guide
 
 Get started with the Wine Quality Analysis in 5 minutes!
 
@@ -61,7 +61,6 @@ All visualizations saved to `docs/` folder:
 - And more!
 
 ## Expected Runtime
-
 - **Full notebook:** ~5-10 minutes (depending on hardware)
 - **Individual sections:** 30 seconds - 2 minutes each
 
@@ -89,8 +88,6 @@ pip install xgboost lightgbm catboost shap umap-learn
 
 ## Need Help?
 
-- 📖 See [README.md](README.md) for full documentation
-- 🐛 [Report issues](https://github.com/priankr/wine-quality-machine-learning/issues)
-- 💬 Check Jupyter cell markdown for detailed explanations
-
-Happy analyzing! 🍷
+- See [README.md](README.md) for full documentation
+- [Report issues](https://github.com/priankr/wine-quality-machine-learning/issues)
+- Check Jupyter cell markdown for detailed explanations
