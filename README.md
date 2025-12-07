@@ -157,19 +157,9 @@ wine-quality-machine-learning/
 
 ## References
 
-**Original Dataset:**
-- P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis.
-  *Modeling wine preferences by data mining from physicochemical properties.*
-  In Decision Support Systems, Elsevier, 47(4):547-553, 2009.
-
-**UCI Repository:**
-- [Wine Quality Data Set](https://archive.ics.uci.edu/ml/datasets/wine+quality)
-
-**Vinho Verde:**
-- [Official Website](https://www.vinhoverde.pt/en/)
-
-**Original Kaggle Project:**
-- [Wine Quality ML Classification](https://www.kaggle.com/priankravichandar/wine-quality-machine-learning-classification)
+- **Original Dataset:** P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis. *Modeling wine preferences by data mining from physicochemical properties.* In Decision Support Systems, Elsevier, 47(4):547-553, 2009.
+- **UCI Repository:** [Wine Quality Data Set](https://archive.ics.uci.edu/ml/datasets/wine+quality)
+- **Original Kaggle Project:** [Wine Quality ML Classification](https://www.kaggle.com/priankravichandar/wine-quality-machine-learning-classification)
 
 ## License
 
