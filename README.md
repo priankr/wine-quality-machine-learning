@@ -38,12 +38,6 @@ This project analyzes wine quality based on physicochemical properties using adv
 - **Dimensionality Reduction** - PCA and UMAP visualizations
 - **Interactive 2D/3D plots** - Explore wine similarity
 
-### Interactive GitHub Pages Dashboard
-- **Responsive design** - Works on desktop and mobile
-- **Interactive charts** - Plotly.js visualizations
-- **Live predictor** - Test wine quality predictions
-- **Modern UI** - Clean, professional interface
-
 ## Key Results
 
 | Model | Test Accuracy | Cross-Val Mean |
@@ -141,27 +135,6 @@ wine-quality-machine-learning/
 - Optimal cluster discovery (elbow method)
 - Cluster characterization
 - 2D visualization (PCA, UMAP)
-
-## GitHub Pages Deployment
-
-The interactive dashboard is automatically deployed via GitHub Pages from the `docs/` folder.
-
-### To Update the Dashboard:
-
-1. Run the updated Jupyter notebook to generate all visualizations
-2. Ensure all HTML files are in the `docs/` folder
-3. Commit and push changes
-4. GitHub Pages will automatically update
-
-## Using the Wine Quality Predictor
-
-The interactive dashboard includes a live predictor where you can:
-
-1. **Use presets:** High Quality, Average, or Low Quality wine profiles
-2. **Enter custom values:** All 11 physicochemical properties
-3. **Get instant predictions:** Quality score and category
-
-**Note:** The browser-based predictor uses a simplified heuristic model. For accurate predictions, use the trained LightGBM model from the notebook.
 
 ## Key Insights
 
