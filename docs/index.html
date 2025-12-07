@@ -97,26 +97,6 @@
             color: white;
         }
 
-        .predictor-form {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 10px;
-            margin-top: 1rem;
-        }
-
-        .prediction-result {
-            background: linear-gradient(135deg, var(--wine-purple) 0%, var(--wine-red) 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            margin-top: 1.5rem;
-            display: none;
-        }
-
-        .feature-input {
-            margin-bottom: 1rem;
-        }
-
         .wine-icon {
             font-size: 3rem;
             color: var(--wine-red);
@@ -176,7 +156,6 @@
                     <li class="nav-item"><a class="nav-link" href="#overview">Overview</a></li>
                     <li class="nav-item"><a class="nav-link" href="#models">Models</a></li>
                     <li class="nav-item"><a class="nav-link" href="#insights">Insights</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#predictor">Predictor</a></li>
                     <li class="nav-item"><a class="nav-link" href="https://github.com/priankr/wine-quality-machine-learning" target="_blank">
                         <i class="fab fa-github"></i> GitHub
                     </a></li>
@@ -411,107 +390,6 @@
         </div>
     </section>
 
-    <!-- Wine Quality Predictor -->
-    <section id="predictor" class="container mb-5">
-        <h2 class="section-title"><i class="fas fa-magic"></i> Wine Quality Predictor</h2>
-
-        <div class="chart-container">
-            <h4>Predict Wine Quality</h4>
-            <p>Enter wine properties to predict its quality score (4-8). Use the presets or enter custom values.</p>
-
-            <div class="predictor-form">
-                <div class="row mb-3">
-                    <div class="col-md-12">
-                        <label class="form-label"><strong>Quick Presets:</strong></label>
-                        <button class="btn btn-outline-primary btn-sm me-2" onclick="loadPreset('high')">High Quality Wine</button>
-                        <button class="btn btn-outline-secondary btn-sm me-2" onclick="loadPreset('average')">Average Wine</button>
-                        <button class="btn btn-outline-warning btn-sm" onclick="loadPreset('low')">Low Quality Wine</button>
-                    </div>
-                </div>
-
-                <form id="predictorForm">
-                    <div class="row">
-                        <div class="col-md-4 feature-input">
-                            <label class="form-label">Fixed Acidity</label>
-                            <input type="number" class="form-control" id="fixed_acidity" step="0.1" value="7.0" required>
-                        </div>
-                        <div class="col-md-4 feature-input">
-                            <label class="form-label">Volatile Acidity</label>
-                            <input type="number" class="form-control" id="volatile_acidity" step="0.01" value="0.3" required>
-                        </div>
-                        <div class="col-md-4 feature-input">
-                            <label class="form-label">Citric Acid</label>
-                            <input type="number" class="form-control" id="citric_acid" step="0.01" value="0.3" required>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4 feature-input">
-                            <label class="form-label">Residual Sugar</label>
-                            <input type="number" class="form-control" id="residual_sugar" step="0.1" value="2.0" required>
-                        </div>
-                        <div class="col-md-4 feature-input">
-                            <label class="form-label">Chlorides</label>
-                            <input type="number" class="form-control" id="chlorides" step="0.001" value="0.05" required>
-                        </div>
-                        <div class="col-md-4 feature-input">
-                            <label class="form-label">Free Sulfur Dioxide</label>
-                            <input type="number" class="form-control" id="free_sulfur_dioxide" step="1" value="30" required>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4 feature-input">
-                            <label class="form-label">Total Sulfur Dioxide</label>
-                            <input type="number" class="form-control" id="total_sulfur_dioxide" step="1" value="100" required>
-                        </div>
-                        <div class="col-md-4 feature-input">
-                            <label class="form-label">Density</label>
-                            <input type="number" class="form-control" id="density" step="0.0001" value="0.995" required>
-                        </div>
-                        <div class="col-md-4 feature-input">
-                            <label class="form-label">pH</label>
-                            <input type="number" class="form-control" id="pH" step="0.01" value="3.2" required>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4 feature-input">
-                            <label class="form-label">Sulphates</label>
-                            <input type="number" class="form-control" id="sulphates" step="0.01" value="0.6" required>
-                        </div>
-                        <div class="col-md-4 feature-input">
-                            <label class="form-label">Alcohol (%)</label>
-                            <input type="number" class="form-control" id="alcohol" step="0.1" value="11.0" required>
-                        </div>
-                        <div class="col-md-4 feature-input">
-                            <label class="form-label">Wine Type</label>
-                            <select class="form-select" id="type" required>
-                                <option value="0">Red</option>
-                                <option value="1" selected>White</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="text-center mt-4">
-                        <button type="submit" class="btn btn-lg" style="background: linear-gradient(135deg, var(--wine-purple) 0%, var(--wine-red) 100%); color: white;">
-                            <i class="fas fa-magic"></i> Predict Quality
-                        </button>
-                    </div>
-                </form>
-
-                <div class="prediction-result" id="predictionResult">
-                    <div class="text-center">
-                        <h3>Predicted Quality Score</h3>
-                        <div style="font-size: 4rem; font-weight: bold;" id="predictedScore">-</div>
-                        <p class="mb-0" id="qualityCategory">-</p>
-                        <small class="mt-2 d-block" style="opacity: 0.8;">Based on LightGBM model trained on 6,000+ wine samples</small>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer class="footer">
         <div class="container text-center">
@@ -596,125 +474,6 @@
                 document.getElementById('modelBadges').innerHTML = badgesHTML;
             })
             .catch(error => console.error('Error loading model results:', error));
-
-        // Wine quality predictor presets
-        const presets = {
-            high: {
-                fixed_acidity: 7.5,
-                volatile_acidity: 0.25,
-                citric_acid: 0.35,
-                residual_sugar: 2.5,
-                chlorides: 0.04,
-                free_sulfur_dioxide: 35,
-                total_sulfur_dioxide: 120,
-                density: 0.993,
-                pH: 3.15,
-                sulphates: 0.7,
-                alcohol: 12.5,
-                type: 1
-            },
-            average: {
-                fixed_acidity: 7.0,
-                volatile_acidity: 0.35,
-                citric_acid: 0.30,
-                residual_sugar: 2.0,
-                chlorides: 0.055,
-                free_sulfur_dioxide: 30,
-                total_sulfur_dioxide: 100,
-                density: 0.995,
-                pH: 3.25,
-                sulphates: 0.6,
-                alcohol: 10.5,
-                type: 1
-            },
-            low: {
-                fixed_acidity: 6.5,
-                volatile_acidity: 0.55,
-                citric_acid: 0.15,
-                residual_sugar: 1.5,
-                chlorides: 0.08,
-                free_sulfur_dioxide: 20,
-                total_sulfur_dioxide: 80,
-                density: 0.997,
-                pH: 3.45,
-                sulphates: 0.45,
-                alcohol: 9.0,
-                type: 0
-            }
-        };
-
-        function loadPreset(preset) {
-            const values = presets[preset];
-            for (const [key, value] of Object.entries(values)) {
-                const element = document.getElementById(key);
-                if (element) {
-                    element.value = value;
-                }
-            }
-        }
-
-        // Predict wine quality
-        document.getElementById('predictorForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // Get all values
-            const features = {
-                fixed_acidity: parseFloat(document.getElementById('fixed_acidity').value),
-                volatile_acidity: parseFloat(document.getElementById('volatile_acidity').value),
-                citric_acid: parseFloat(document.getElementById('citric_acid').value),
-                residual_sugar: parseFloat(document.getElementById('residual_sugar').value),
-                chlorides: parseFloat(document.getElementById('chlorides').value),
-                free_sulfur_dioxide: parseFloat(document.getElementById('free_sulfur_dioxide').value),
-                total_sulfur_dioxide: parseFloat(document.getElementById('total_sulfur_dioxide').value),
-                density: parseFloat(document.getElementById('density').value),
-                pH: parseFloat(document.getElementById('pH').value),
-                sulphates: parseFloat(document.getElementById('sulphates').value),
-                alcohol: parseFloat(document.getElementById('alcohol').value),
-                type: parseInt(document.getElementById('type').value)
-            };
-
-            // Simple heuristic prediction (since we can't run Python model in browser)
-            // This is a simplified rule-based approach based on feature importance
-            let score = 5; // Base score
-
-            // Alcohol (strongest predictor)
-            if (features.alcohol > 11) score += 1;
-            if (features.alcohol > 12) score += 0.5;
-            if (features.alcohol < 9.5) score -= 1;
-
-            // Volatile acidity (negative predictor)
-            if (features.volatile_acidity < 0.3) score += 0.5;
-            if (features.volatile_acidity > 0.5) score -= 1;
-            if (features.volatile_acidity > 0.7) score -= 0.5;
-
-            // Chlorides (negative predictor)
-            if (features.chlorides < 0.05) score += 0.3;
-            if (features.chlorides > 0.07) score -= 0.5;
-
-            // Sulphates (positive predictor)
-            if (features.sulphates > 0.6) score += 0.3;
-
-            // pH
-            if (features.pH < 3.3) score += 0.2;
-
-            // Clamp score between 4 and 8
-            score = Math.max(4, Math.min(8, Math.round(score * 2) / 2));
-
-            // Display result
-            document.getElementById('predictedScore').textContent = score;
-
-            let category = '';
-            if (score >= 7) category = '🏆 High Quality Wine';
-            else if (score >= 6) category = '👍 Good Quality Wine';
-            else if (score >= 5) category = '😐 Average Quality Wine';
-            else category = '👎 Below Average Quality';
-
-            document.getElementById('qualityCategory').textContent = category;
-            document.getElementById('predictionResult').style.display = 'block';
-
-            // Scroll to result
-            document.getElementById('predictionResult').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        });
 
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
